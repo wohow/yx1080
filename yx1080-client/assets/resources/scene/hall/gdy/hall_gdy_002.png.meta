@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "c9db0d0f-3fcd-45a6-aabb-9bce8b547c95",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "hall_gdy_002": {
+      "ver": "1.0.3",
+      "uuid": "8636c75e-2b41-4d85-a0ac-a8dd3c78c910",
+      "rawTextureUuid": "c9db0d0f-3fcd-45a6-aabb-9bce8b547c95",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 262,
+      "height": 80,
+      "rawWidth": 262,
+      "rawHeight": 80,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

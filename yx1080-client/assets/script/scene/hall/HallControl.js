@@ -28,16 +28,23 @@ cc.Class({
     		let node = cannons[i];
     		node.position = cc.p(0,0);
     		node.active = false;
-    		this.views[node.name] = node;
+            let view = node.getComponent('BaseView');
+            if(view){
+                this.views[node.name] = view;
+            } else {
+                console.error('发现一个UI没有继承至BaseView');
+            }
     	}
     	console.log('views:', this.views);
     },
 
     // 打开二级界面
-    openView: function (name) {
+    openView: function (data) {
+        let name = data.name;
+        delete data['name'];
     	let view = this.views[name];
     	if (view) {
-    		view.active = true;
+    		view.open(data);
     	}
     }
 

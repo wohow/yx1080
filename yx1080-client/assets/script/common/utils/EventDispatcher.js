@@ -3,7 +3,7 @@
  * 事件驱动
  */
 
-var EventDispatcher = module.exports;
+ 
 
 // 事件列表
 let events = {};
@@ -14,7 +14,7 @@ let events = {};
  * @param  {[type]} listen [description]
  * @return {[type]}        [description]
  */
-EventDispatcher.listen = function (type, listen) {
+exports.listen = function (type, listen) {
 	let event = events[type];
 	if(!event){
 		event = [];
@@ -30,7 +30,7 @@ EventDispatcher.listen = function (type, listen) {
  * @param  {[type]} data [description]
  * @return {[type]}      [description]
  */
-EventDispatcher.dispatch = function(type, data){
+exports.dispatch = function(type, data){
 	let event = events[type];
 	if(event){
 		for (let i = event.length-1; i >= 0; i--) {
@@ -45,7 +45,7 @@ EventDispatcher.dispatch = function(type, data){
  * @param  {[type]} listen [description]
  * @return {[type]}        [description]
  */
-EventDispatcher.remove = function(type, listen){
+exports.remove = function(type, listen){
 	if(!listen){
 		delete events[type];
 		return;
@@ -62,6 +62,6 @@ EventDispatcher.remove = function(type, listen){
 	}
 };
 
-EventDispatcher.print = function(){
+exports.print = function(){
 	console.log('events:', events);
 };

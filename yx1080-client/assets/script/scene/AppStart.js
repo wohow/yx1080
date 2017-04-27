@@ -1,4 +1,6 @@
 
+let isInitConfig = false;
+
 /**
 *　入口
 */
@@ -10,10 +12,11 @@ cc.Class({
         nextScene: 'login',
     },
 
-    start: function () {
+    start () {
         this.updateStatusShow('连接服务器中...');
-
-        this.initConfig();
+        if(!isInitConfig){
+            this.initConfig();
+        }
 
         // 预加载初始场景 然后进入主场景
         cc.director.preloadScene(this.nextScene, ()=> {
@@ -21,10 +24,25 @@ cc.Class({
         });
     },
 
-    initConfig: function () {
+    // 初始化 配置
+    initConfig () {
+        isInitConfig = true;
         cc.app = {};
         // 场景管理
         cc.app.loadScene = require('SceneMgr').load;
+        // 提示框
+        const tip = require('TipMgr')();
+        cc.app.alert = tip.alert.bind(tip);
+        cc.app.showMessageBox = tip.showMessageBox.bind(tip);
+        // 对象池
+        const pool = require('ObjectPool');
+        cc.createNode = pool.create;
+        cc.destroyNode = pool.destroy;
+        // 资源管理
+        cc.assetsMgr = require('AssetsMgr')();
+        // 音频管理
+        cc.audioMgr = require('AudioMgr');
+        cc.audioMgr.init();
         // 全局数据
         cc.global = require('Global');
         // 事件
@@ -33,15 +51,20 @@ cc.Class({
         cc.net = require('net');
     },
 
+    // 加载资源
+    loadAssets () {
+
+    },
+
     // 进入主场景
-    enterMainScene: function () {
+    enterMainScene () {
         setTimeout(()=>{
             cc.director.loadScene(this.nextScene)
         }, 1000);
     },
 
     // 刷新状态显示
-    updateStatusShow: function (msg) {
+    updateStatusShow (msg) {
         this.status.string = msg;
     }
 });

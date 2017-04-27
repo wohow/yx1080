@@ -1,6 +1,6 @@
 
 
-var instance = null;
+let instance = null;
 
 /**
  * 场景管理
@@ -35,14 +35,12 @@ cc.Class({
 });
 
 
-var exp = module.exports;
-
 /**
  * 加载一个场景
  * @param  {[type]} sceneNanme [description]
  * @return {[type]}            [description]
  */
-exp.load = function (sceneNanme) {
+exports.load = function (sceneNanme) {
     showLoadingDisplay();
     // console.log(sceneNanme)
     if(typeof(sceneNanme) === 'string'){
@@ -55,7 +53,6 @@ exp.load = function (sceneNanme) {
         console.error('sceneNanme typeof error');
     }
 };
-
 
 // 显示加载进度条 - node形式实现
 function showLoadingDisplay(){

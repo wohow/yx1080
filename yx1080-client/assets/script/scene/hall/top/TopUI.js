@@ -20,7 +20,7 @@ cc.Class({
 
     // 点击菜单
     onClickMenu: function (event, data) {
-        cc.eventDispatcher.dispatch(EventType.OPEN_VIEW, data);
+        cc.eventDispatcher.dispatch(EventType.OPEN_VIEW, {name: data});
     },
 
     // 点击购买
