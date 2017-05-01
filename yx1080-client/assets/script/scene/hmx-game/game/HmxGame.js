@@ -46,7 +46,7 @@ cc.Class({
         cc.net.on('onExitRoom', this.onExitRoom, this);
     },
 
-    onDestroy () {
+    onDisable () {
         cc.net.off('onExitRoom', this);
     },
 

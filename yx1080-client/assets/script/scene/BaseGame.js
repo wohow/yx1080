@@ -23,7 +23,7 @@ cc.Class({
     },
 
     _init () { },// 子类重写
-    close () { },// 之类重写
+    _close () { },// 之类重写
 
     initOn () {
         cc.eventMgr.on(cc.app.event.UPDATE_USERCOUNT, this.updateUsercount, this);
@@ -33,7 +33,7 @@ cc.Class({
     onDestroy () {
         cc.eventMgr.off(cc.app.event.UPDATE_USERCOUNT, this.updateUsercount, this);
         cc.eventMgr.off(cc.app.event.UPDATE_INNINGS, this.updateInnings, this);
-        this.close();    
+        this._close();
     },
 
     // 刷新局数

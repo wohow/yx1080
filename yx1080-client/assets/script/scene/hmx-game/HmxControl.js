@@ -19,9 +19,10 @@ cc.Class({
         cc.net.on('onStartGame', this.onStartGame, this);
         cc.net.on('onRoomDlVote', this.onRoomDlVote, this);
         cc.net.on('onRoomDlVoteResult', this.onRoomDlVoteResult, this);
+        console.log('start --------');
     },
 
-    close () {
+    _close () {
         cc.net.off('onStartGame', this);
         cc.net.off('onRoomDlVote', this);
         cc.net.off('onRoomDlVoteResult', this);

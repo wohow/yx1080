@@ -16,17 +16,17 @@ cc.Class({
         const list = cc.global.roomInfo.users;
         const homeownersUid = cc.global.roomInfo.homeownersUid;
         // 重新排列
-        YXUtils.afreshArrangeSeat(this.users, cc.global.seat);        
+        YXUtils.afreshArrangeSeat(this.users, cc.global.seat);
         for (let i = list.length - 1; i >= 0; i--) {
             let user = list[i];
-            if(!user) continue;
+            if (!user) continue;
             this.users[user.seat].init(user, homeownersUid === user.uid);
         }
         // 是不是开始准备了
-        if(cc.global.roomInfo.status === 'PREPARE'){
+        if (cc.global.roomInfo.status === 'PREPARE') {
             this.ready();
         }
-        
+
         // 监听
         cc.net.on('onAddUser', this.onAddUser, this);
         cc.net.on('onStartPrepare', this.onStartPrepare, this);
@@ -34,10 +34,13 @@ cc.Class({
     },
 
     close() {
+        this.node.active = false;
+    },
+
+    onDisable() {
         cc.net.off('onAddUser', this);
         cc.net.off('onStartPrepare', this);
         cc.net.off('onExitRoom', this);
-        this.node.active = false;
     },
 
     // 有玩家加入
@@ -55,7 +58,7 @@ cc.Class({
         cc.global.roomInfo.status = 'PREPARE';
         this.ready();
     },
-  
+
     // 准备
     ready() {
         cc.net.send('hmx.mainHandler.ready', { roomId: cc.global.roomInfo.id });
@@ -64,8 +67,8 @@ cc.Class({
     // 有玩家退出
     onExitRoom(data) {
         let user = this.users.find(m => m && m.uid === data.uid);
-        if(!user) return;
-        if(data.isOffline){
+        if (!user) return;
+        if (data.isOffline) {
             cc.global.roomInfo.users[user.seat].status = 'OFFLINE';
             user.offline();
         } else {
@@ -77,13 +80,14 @@ cc.Class({
 
 
     // 刷新人数
-    updateUsercount () {
+    updateUsercount() {
         let count = cc.global.roomInfo.users.filter(m => !!m).length;
         cc.eventMgr.emit(cc.app.event.UPDATE_USERCOUNT, count);
     },
-
+    
     // 点击邀请微信好友
-    onClickWxInviteFriend() {
+    onClickWxInviteFriend () {
 
-    },
+    }
+
 });
