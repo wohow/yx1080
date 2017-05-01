@@ -10,21 +10,26 @@ cc.Class({
 
     properties: {
         mask: cc.Node,
-        bg: cc.Node
+        bg: cc.Node,
+        loading: cc.Animation,
     },
 
-    onLoad: function () {
+    onLoad () {
         instance = this;
         cc.game.addPersistRootNode(this.node);
         this.mask.on(cc.Node.EventType.TOUCH_START, (event) => event.stopPropagation());
     },
 
-    wait: function (isOpen) {
+    wait (isOpen) {
         this.unscheduleAllCallbacks();
         if(isOpen){
             this.mask.active = true;
-            this.scheduleOnce(()=> this.bg.active = true, 1.5);
+            this.scheduleOnce(()=> {
+                this.bg.active = true;
+                this.loading.play();
+            }, 1.5);
         } else {
+            this.loading.stop();
             this.mask.active = false;
             this.bg.active = false;
         }

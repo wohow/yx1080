@@ -1,6 +1,4 @@
 
-const EventType = require('EventType');
-
 /**
 *　大厅上部UI
 */
@@ -15,12 +13,15 @@ cc.Class({
     },
 
     onLoad: function () {
-
+        cc.assetsMgr.setHeadimg(this.headimg);
+        this.nicknameTxt.string = cc.global.nickname;
+        this.goldTxt.string = cc.global.gold;
+        this.roomcarTxt.string = cc.global.roomcard;
     },
 
     // 点击菜单
     onClickMenu: function (event, data) {
-        cc.eventDispatcher.dispatch(EventType.OPEN_VIEW, {name: data});
+        cc.eventMgr.emit(cc.app.event.OPEN_VIEW, {name: data});
     },
 
     // 点击购买

@@ -25,7 +25,6 @@ cc.Class({
 
     getData () {
         return {
-            type: 'hmx',
             lowGrade: config.lowGrade[this.getIndex(this.lowGrades)],
             inningSelect: config.inningSelect[this.getIndex(this.inningSelects)],
             playSelect: config.playSelect[this.getIndex(this.playSelects)],

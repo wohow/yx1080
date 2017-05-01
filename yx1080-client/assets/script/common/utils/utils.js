@@ -88,6 +88,10 @@ exports.rotation = function(a, b){
 
 /**
  * 给一个button添加一个事件
+ * @param  button
+ * @param  component 需要监听点击事件的组建
+ * @param  callback 点击回调函数名字
+ * @param  data 可以附加数据
  */
 exports.addEventHandler = (button, component, callback, data)=> {
     if(!button){
@@ -130,18 +134,34 @@ exports.playAnimation = function (anim, cb, name) {
 /**
  * 设置一个值 避免空
  */
-const setValueAvoidNull = exports.setValueAvoidNull = function (node, key, value) {
+exports.setValueAvoidNull = function (node, key, value) {
     if (node) {
         node[key] = value;
     }
 };
+
+/*
+* 数字 字符串补0 
+* 根据长度补出前面差的0
+*/
+const pad = exports.pad = function() {
+    let tbl = [];
+    return function(number, length = 2) {
+        let len = length - number.toString().length;
+        if (len <= 0)
+            return number;
+        if (!tbl[len])
+            tbl[len] = (new Array(len+1)).join('0');
+        return tbl[len] + number;
+    };
+}();
 
 /**
  * 将一个毫秒数 转成00:00:00格式
  */
 exports.millisecondToDate = function (msd, fmt) {
     var time = msd / 1000;
-    var hour = Math.floor(time / 3600.0);
+    var hour = Math.floor(time / 3600);
     var minute = Math.floor((time % 3600) / 60);
     var second = Math.floor(time - (hour * 3600) - (minute * 60));
     if (fmt) {//HH:mm:ss
@@ -150,24 +170,24 @@ exports.millisecondToDate = function (msd, fmt) {
         fmt = fmt.replace('ss', timeToString(second));
         return fmt;
     }
-    return timeToString(hour) + ':' + timeToString(minute) + ':' + timeToString(second);
+    return pad(hour) + ':' + pad(minute) + ':' + pad(second);
 };
-function timeToString(t) {
-    return (t < 10 ? '0' : '') + t;
-}
 
 /**
  * @pram
  */
 exports.gotoNumber = function (label, currNum, toNum, cb) {
+    if(typeof label != 'Label')
+        return console.error('gotoNumber typeof label != \'Label\'');
     var time = 1000 / 20;
     var value = (toNum - currNum) / 20;
     for (var i = 20; i > 0; i--) {
         let j = i;
         setTimeout(() => {
             currNum += Math.floor(value);
-            setValueAvoidNull(label, 'string', currNum);
+            label.string = currNum;
             if(toNum === currNum && cb) cb();
         }, time * j);
     }
 }
+

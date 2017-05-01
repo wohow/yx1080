@@ -23,6 +23,14 @@ cc.Class({
     // 点击创建
     onClickCreate () {
     	let data = this[this.curType].getData();
-        console.log('创建房间：', data);
+        cc.net.send('hall.roomHandler.createRoom', {type: this.curType, config: data}, (data) => {
+            if(data.code === 200){
+                cc.global.roomInfo = data.roomInfo;
+                cc.global.seat = data.roomInfo.users.findIndex(m => m.uid === cc.global.uid);
+                cc.app.loadScene(data.type+'-game');// 进入游戏
+            } else {
+                console.log(data.error);
+            }
+        });
     }
 });

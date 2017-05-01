@@ -1,5 +1,7 @@
 
-let isInitConfig = false;
+cc.macro.FIX_ARTIFACTS_BY_STRECHING_TEXEL = 0;
+
+let isInit = false;
 
 /**
 *　入口
@@ -9,24 +11,24 @@ cc.Class({
 
     properties: {
         status: cc.Label,
-        nextScene: 'login',
     },
 
     start () {
-        this.updateStatusShow('连接服务器中...');
-        if(!isInitConfig){
+        this.schedule(this.updateLoadingDot, 0.5);
+        if(!isInit){
+            this.setStatusMsg('拼命加载中');
             this.initConfig();
-        }
+            // 检查更新
 
-        // 预加载初始场景 然后进入主场景
-        cc.director.preloadScene(this.nextScene, ()=> {
-            this.enterMainScene();
-        });
+            // 加载资源
+            cc.assetsMgr.init(this.onLoadComplete.bind(this));
+        } else {
+            this.onLoadComplete();
+        }
     },
 
     // 初始化 配置
     initConfig () {
-        isInitConfig = true;
         cc.app = {};
         // 场景管理
         cc.app.loadScene = require('SceneMgr').load;
@@ -46,25 +48,33 @@ cc.Class({
         // 全局数据
         cc.global = require('Global');
         // 事件
-        cc.eventDispatcher = require('EventDispatcher');
+        cc.eventMgr = require('EventDispatcher');
+        cc.app.event = require('EventType');
         // 网络
         cc.net = require('net');
+        // 工具库
+        cc.utils = require('utils');
+        isInit = true;
     },
 
-    // 加载资源
-    loadAssets () {
-
-    },
-
-    // 进入主场景
-    enterMainScene () {
-        setTimeout(()=>{
-            cc.director.loadScene(this.nextScene)
-        }, 1000);
+    // 加载完成 链接服务器
+    onLoadComplete () {
+        this.setStatusMsg('连接服务器中');
+        require('loginLogic').connect();
     },
 
     // 刷新状态显示
-    updateStatusShow (msg) {
-        this.status.string = msg;
-    }
+    setStatusMsg (msg) {
+        this.loadingDot = '';
+        this.loadingMsg = msg;
+        this.status.string = this.loadingMsg;
+    },
+
+    updateLoadingDot () {
+        this.loadingDot += '.';
+        if(this.loadingDot === '....') 
+            this.loadingDot = '';
+        this.status.string = this.loadingMsg + this.loadingDot;
+    },
+
 });

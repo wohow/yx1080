@@ -1,6 +1,4 @@
 
-const EventType = require('EventType');
-
 /**
 *　大厅下部UI
 */
@@ -16,6 +14,6 @@ cc.Class({
 
     // 点击菜单
     onClickMenu: function (event, data) {
-        cc.eventDispatcher.dispatch(EventType.OPEN_VIEW, {name: data});
+        cc.eventMgr.emit(cc.app.event.OPEN_VIEW, {name: data});
     }
 });

@@ -1,6 +1,4 @@
 
-const EventType = require('EventType');
-
 /**
 *　大厅中部UI
 */
@@ -65,6 +63,7 @@ cc.Class({
     	this.hmxContent.active = false;
     	this.gdyContent.active = false;
     	this.hmxjbContent.active = false;
+        this.backNode.active = false;
     },
 
     content () {
@@ -81,7 +80,7 @@ cc.Class({
 
     // 点击 房卡
     onClickRoomcar (event, data) {
-    	cc.eventDispatcher.dispatch(EventType.OPEN_VIEW, {name: data, type: this.curContent});
+    	cc.eventMgr.emit(cc.app.event.OPEN_VIEW, {name: data, type: this.curContent});
     },
 
     // 点击 金币场

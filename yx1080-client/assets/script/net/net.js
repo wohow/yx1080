@@ -3,11 +3,6 @@ const wc = require('WaitConnection');
 
 
 /**
- * 通信类
- */
-// var net = module.exports;
-
-/**
  * 服务器断开
  */
 exports.onDisconnect = function(cb){
@@ -32,9 +27,9 @@ exports.connect = function(address, cb){
  * 发送消息
  */
 exports.send = function(route, msg, cb, isWait = true){
-	if(!!cb){
+	if (cb) {
 		request(route, msg, cb, isWait);
-	}else{
+	} else {
 		notify(route, msg);
 	}
 };
@@ -43,11 +38,12 @@ exports.send = function(route, msg, cb, isWait = true){
  * 监听消息
  */
 exports.on = function (route, cb, target) {
+	let listener = cb;
 	if(target){
-		var events = target._pomelo_events_ = target._pomelo_events_ || {};
-		events[route] = cb;
+		let events = target._pomelo_events_ = target._pomelo_events_ || {};
+		listener = events[route] = cb.bind(target);
 	}
-	pomelo.on(route, cb);
+	pomelo.on(route, listener);
 };
 
 exports.once = function (route, cb) {
@@ -55,9 +51,9 @@ exports.once = function (route, cb) {
 };
 
 exports.off = function (route, cb) {
-	var listener = cb;
+	let listener = cb;
 	if(typeof(cb) !== 'function'){
-		var events = cb._pomelo_events_ || {};
+		let events = cb._pomelo_events_ || {};
 		listener = events[route] || function(){};
 		delete events[route];
 	}
@@ -66,8 +62,9 @@ exports.off = function (route, cb) {
 
 
 function request(route, msg, cb, isWait){
-	if(isWait)
+	if(isWait){
 		wc.wait(true);
+	}
 	pomelo.request(route, msg, function(data){
 		wc.wait(false);
 		cb(data);

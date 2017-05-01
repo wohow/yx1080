@@ -23,7 +23,6 @@ cc.Class({
 
     getData () {
         return {
-            type: 'gdy',
             lowGrade: config.lowGrade[this.getIndex(this.lowGrades)],
             inningSelect: config.inningSelect[this.getIndex(this.inningSelects)],
         };

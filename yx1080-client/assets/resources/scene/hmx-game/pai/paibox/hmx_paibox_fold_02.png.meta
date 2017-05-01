@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "d8c34e85-2f14-465c-9c88-0e07293b428e",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "hmx_paibox_fold_02": {
+      "ver": "1.0.3",
+      "uuid": "12cc44a8-df6c-4e11-85d9-99ca712b5f5c",
+      "rawTextureUuid": "d8c34e85-2f14-465c-9c88-0e07293b428e",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 38,
+      "height": 58,
+      "rawWidth": 38,
+      "rawHeight": 58,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

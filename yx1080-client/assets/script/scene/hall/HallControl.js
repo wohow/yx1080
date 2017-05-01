@@ -1,6 +1,4 @@
 
-const EventType = require('EventType');
-
 /**
 *　大厅
 */
@@ -13,11 +11,11 @@ cc.Class({
 
     onLoad: function () {
     	this.initViews();
-    	cc.eventDispatcher.listen(EventType.OPEN_VIEW, (data)=> this.openView(data));
+    	cc.eventMgr.on(cc.app.event.OPEN_VIEW, this.openView, this);
     },
 
     onDestroy: function () {
-    	cc.eventDispatcher.remove(EventType.OPEN_VIEW);
+    	cc.eventMgr.off(cc.app.event.OPEN_VIEW, this.openView, this);
     },
 
     // 初始化界面
@@ -35,7 +33,7 @@ cc.Class({
                 console.error('发现一个UI没有继承至BaseView');
             }
     	}
-    	console.log('views:', this.views);
+    	// console.log('views:', this.views);
     },
 
     // 打开二级界面
