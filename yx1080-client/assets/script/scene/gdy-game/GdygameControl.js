@@ -9,8 +9,16 @@ cc.Class({
 
     },
 
-    onLoad () {
+    _init() {
 
+    },
+
+    start () {
+
+    },
+
+    close () {
+        console.log('gdy close');
     },
 
 });

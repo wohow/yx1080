@@ -33,7 +33,7 @@ Handler.prototype.ready = function(msg, session, next) {
 	next(null);
 
 	// 是不是都准备好了
-	if(room.users.every(m => m && m.status === sc.READY)){
+	if(room.users.every(m => m && m && m.status === sc.READY)){
 		room.status = sc.INGAME;
 		room.init();
 		room.pushMessage('onStartGame', room.wrapGameData());

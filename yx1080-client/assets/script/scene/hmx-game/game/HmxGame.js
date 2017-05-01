@@ -36,6 +36,9 @@ cc.Class({
         this.arrowNode.rotation = -90 * (4-cc.global.seat);// 让指示器 东指向位置0的玩家
         // 初始化牌
 
+        // 刷新局数
+        cc.eventMgr.emit(cc.app.event.UPDATE_INNINGS, gameInfo.currInnings);
+
         this.initOn();
     },
 
@@ -49,7 +52,7 @@ cc.Class({
 
     // 有玩家退出
     onExitRoom (data) {
-        let user = this.users.find(m => m.userInfo.uid === data.uid);
+        let user = this.users.find(m => m && m.userInfo.uid === data.uid);
         if(!user) return;
         user = user.userInfo;
         cc.global.roomInfo.users[user.seat].status = 'OFFLINE';

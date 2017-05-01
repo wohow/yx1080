@@ -96,7 +96,7 @@ Remote.prototype.leave = function(roomId, uid, cb) {
 		if(!user) return cb(false);
 
 		// 如果其他玩家都离线了 那么就直接解散
-		let ls = room.users.filter(m => m.status !== sc.OFFLINE);
+		let ls = room.users.filter(m => m && m.status !== sc.OFFLINE);
 		if(ls.length === 1 && ls[0].uid === uid){// 解散
 			room.close();
 			roomMgr.removeRoom(room.id);

@@ -21,8 +21,11 @@ cc.Class({
         cc.net.on('onRoomDlVoteResult', this.onRoomDlVoteResult, this);
     },
 
-    onDestroy () {
+    close () {
         cc.net.off('onStartGame', this);
+        cc.net.off('onRoomDlVote', this);
+        cc.net.off('onRoomDlVoteResult', this);
+        console.log('hmx close');
     },
 
     // 开始游戏

@@ -38,13 +38,16 @@ const newUser = function (seat, data) {
 
  	// 添加一个用户
  	addUser (user) {
- 		let i = this.users.findIndex(m => !m);
- 		if(i !== -1){
-	 		this.users[i] = newUser(i, user);
-	 		this.channel.add(user.uid, user.sid);
-	 		return this.users[i];
+ 		let idxs = [];
+ 		for (let i = this.users.length - 1; i >= 0; i--) {
+ 			if(this.users[i] === null) idxs.push(i);
  		}
- 		return null;
+ 		if(idxs.length === 0) return null;
+ 		// 随机一个位置出来
+ 		let i = idxs[utils.random(0, idxs.length-1)];
+ 		this.users[i] = newUser(i, user);
+ 		this.channel.add(user.uid, user.sid);
+ 		return this.users[i];
  	}
 
  	getUser (uid) {
@@ -52,7 +55,7 @@ const newUser = function (seat, data) {
  	}
 
  	removeUser (uid) {
- 		let i = this.users.findIndex(m => m.uid === uid);
+ 		let i = this.users.findIndex(m => m && m.uid === uid);
  		if(i !== -1){
  			this.channel.leave(this.users[i].uid, this.users[i].sid);
  			this.users[i] = null;

@@ -47,6 +47,7 @@ cc.Class({
         const homeownersUid = cc.global.roomInfo.homeownersUid;
         cc.global.roomInfo.users[data.seat] = data;
         this.users[data.seat].init(data, homeownersUid === data.uid);
+        this.updateUsercount();
     },
 
     // 提示准备
@@ -62,7 +63,7 @@ cc.Class({
 
     // 有玩家退出
     onExitRoom(data) {
-        let user = this.users.find(m => m.uid === data.uid);
+        let user = this.users.find(m => m && m.uid === data.uid);
         if(!user) return;
         if(data.isOffline){
             cc.global.roomInfo.users[user.seat].status = 'OFFLINE';
@@ -70,7 +71,15 @@ cc.Class({
         } else {
             cc.global.roomInfo.users[user.seat] = null;
             user.empty();
+            this.updateUsercount();
         }
+    },
+
+
+    // 刷新人数
+    updateUsercount () {
+        let count = cc.global.roomInfo.users.filter(m => !!m).length;
+        cc.eventMgr.emit(cc.app.event.UPDATE_USERCOUNT, count);
     },
 
     // 点击邀请微信好友

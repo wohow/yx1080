@@ -26,7 +26,7 @@ cc.Class({
         cc.net.send('hall.roomHandler.createRoom', {type: this.curType, config: data}, (data) => {
             if(data.code === 200){
                 cc.global.roomInfo = data.roomInfo;
-                cc.global.seat = data.roomInfo.users.findIndex(m => m.uid === cc.global.uid);
+                cc.global.seat = data.roomInfo.users.findIndex(m => m && m.uid === cc.global.uid);
                 cc.app.loadScene(data.type+'-game');// 进入游戏
             } else {
                 console.log(data.error);

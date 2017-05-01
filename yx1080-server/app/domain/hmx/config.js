@@ -5,6 +5,5 @@
  */
 module.exports = {
 
-	EG_COUNT: 2,// 满足条件人数
-	DL_COUNT: 2,// 满足解散条件 人数
+	EG_COUNT: 3,// 满足条件人数
 };

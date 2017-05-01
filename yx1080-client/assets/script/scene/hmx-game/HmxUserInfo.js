@@ -1,6 +1,6 @@
 
 /**
-*　准备阶段时候 玩家信息
+*　玩家信息
 */
 cc.Class({
     extends: cc.Component,
